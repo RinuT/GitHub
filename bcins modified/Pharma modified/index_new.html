@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>InsuranceApp</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">	
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	</head>
+
+	<body>
+			<div ng-app="myApp" ng-controller="myCtrl">
+	<div class="container-fluid">
+	
+		<!-- Header Section starts here-->
+		<header class="header_bg">
+			<div class="header_left"></div>
+			<div class="header_right"></div>
+			
+			<div class="container">
+				<div class="logo_pharma">
+					<a href="#"><img src="images/logo.png" alt="logo"/></a>
+				</div>
+				
+				<div class="banner_text_right">
+					Blockchain for Business<br><b>WITH IBM BLOCKCHAIN</b>
+				</div>
+			</div>
+
+		</header> 
+		<!-- Header Section ends here-->
+
+		<div class="wrapper">
+		
+			<!-- Menu Section starts here-->
+			<section class="menu_items_ph" >
+				<div class="container">
+					<ul>
+						<li class="menu_li" ng-click="dahsboard()"><a class="item item01" href="#">Dashboard</a></li>
+						<li class="menu_li" ng-click="policy()"><a class="item item02" href="#">Home Warranty</a></li>
+						<li class="menu_li" ng-click="police()"><a class="item item03" href="#">Police</a></li>
+						<li class="menu_li" ng-click="repair()"><a class="item item04" href="#">Repair Shop</a></li>
+						<li class="menu_li"><a class="item item05" href="#">Insurance</a>
+							<ul class="dropdown_items">
+								<li ng-click="user()"><a href="#">USER</a></li>
+								<li ng-click="company()"><a href="#">COMPANY</a></li>
+								<li ng-click="contracts()"><a href="#">CONTRACTS</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!-- Menu Section ends here-->
+
+			<!-- Content Section starts here-->
+			<section class="content_area">
+				<div class="container"style="height: 800px">
+					<div class="right_content_block col-md-9" ng-show="show_dash">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/" name="iframe_a"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_police">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/police" name="iframe_b"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_policy">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/shop/policy" name="iframe_c"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_repair">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/repair-shop" name="iframe_d"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_user">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/insurance/self-service" name="iframe_e"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_company">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/insurance/claim-processing" name="iframe_f"></iframe>
+					</div>
+					<div class="right_content_block col-md-9" ng-show="show_contracts">
+						<iframe height="800px" width="1150px" style="border: none" src="http://ec2-52-70-254-36.compute-1.amazonaws.com:3000/insurance/contract-management" name="iframe_g"></iframe>
+					</div>
+				</div>
+			</section>
+			<!-- Content Section ends here-->
+			</div>
+		</div>
+
+		<!-- Footer Section starts here-->
+		<footer class="footer">©  copyright 2018</footer>
+		<!-- Footer Section ends here-->
+		
+	</div>
+	<script>
+var app = angular.module('myApp', []);
+ 
+ app.controller('myCtrl',['$scope','$http','$timeout',function ($scope,$http,$timeout) {
+	$scope.show_dash=true;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+$scope.dahsboard=function(){
+	var ifr = document.getElementsByName('iframe_a')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=true;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+}
+$scope.police=function(){
+	var ifr = document.getElementsByName('iframe_b')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=true;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+}
+$scope.policy=function(){
+	var ifr = document.getElementsByName('iframe_c')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=false;
+	$scope.show_policy=true;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+}
+$scope.repair=function(){
+	var ifr = document.getElementsByName('iframe_d')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=true;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+}
+$scope.user=function(){
+	var ifr = document.getElementsByName('iframe_e')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=true;
+	$scope.show_company=false;
+	$scope.show_contracts=false
+}
+$scope.company=function(){
+	var ifr = document.getElementsByName('iframe_f')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=true;
+	$scope.show_contracts=false
+}
+$scope.contracts=function(){
+	var ifr = document.getElementsByName('iframe_g')[0];
+	ifr.src = ifr.src;
+	$scope.show_dash=false;
+	$scope.show_police=false;
+	$scope.show_policy=false;
+	$scope.show_repair=false;
+	$scope.show_user=false;
+	$scope.show_company=false;
+	$scope.show_contracts=true
+}
+ }]);
+	</script>
+	</body>
+</html>

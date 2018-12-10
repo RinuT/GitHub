@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PharmaApp</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">	
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	</head>
+
+	<body class="manufacturer_wrapper">
+			<div ng-app="myApp" ng-controller="myCtrl">
+	
+					<div class="right_content_block col-md-9">
+						
+                      <div class="alert alert-danger" ng-show="failuer">
+                       No painting with this ID
+                      </div>
+						<h2>Painting Use Case</h2>
+						<form>
+							<span class="fields_design col-md-6">
+								<label>Painting ID</label>
+								<input type="text" value="Enter painting ID"ng-model="paintingId"/>
+							</span>
+							
+							
+							<div class="clearfix"></div>
+							
+							<div class="submit_block">
+								<input type="button" value="Submit" class="submit_btn_cmn"ng-click="Create()"/>
+							</div>
+                        </form>
+                        <div class="alert alert-success" ng-show="sucess">
+                                Added drug with transaction Id {{transactionId}}
+                              </div>
+                    </div>
+                    
+			
+	</div>
+	<script>
+var app = angular.module('myApp', []);
+ 
+ app.controller('myCtrl',['$scope','$http','$timeout',function ($scope,$http,$timeout) {
+    $scope.transactionId="";
+    $scope.failuer=false;
+    $scope.paintingId=" "
+    $scope.sucess=false
+    $scope.Create = function(){
+    $scope.setValue();
+  }
+  $scope.setValue=function() {
+    var id =  $scope.paintingId;
+ var request={
+  "channel":  "trackpaintchnl",
+    "chaincode":  "track-painting-shipment",
+    "method":  "queryHistory",
+    "chaincodeVer":  "v2",
+    "args": "["+$scope.paintingId+"]"
+
+}
+    var requestInfo = Request();
+  
+    data : requestInfo
+    var WEBSERVICE_URL = "https://7D719DAA18E54CAB86434F57AAEE550E.blockchain.ocp.oraclecloud.com:443/restproxy4/bcsgw/rest/v1/transaction/query";
+    var req = {
+        url: WEBSERVICE_URL,
+        method: "POST",
+        dataType: "json",   
+        xhrFields: {withCredentials: true},                                     
+        headers: {"Authorization": 'Basic Vmlub2RLdW1hclBhaS5SYW1hY2hhbmRyYUBjb2duaXphbnQuY29tOkJsb2NrY2hhaW5ANzQ=','Access-Control-Allow-Origin' : '*','Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT'},
+        contentType: "application/json",
+        Accept: "application/json",
+        data : request
+}
+ var res = $http(req).then(function successCallback(response){
+          $scope.sucess=true
+          $scope.update_response=response;
+          $scope.transactionId=$scope.update_response.data.transactionId
+         
+      }, function errorCallback(response){
+          console.log("POST-ing of data failed");
+          $scope.failuer=true;
+      });
+}
+
+function Request() {
+
+ return {
+   "Request" :{
+        "channel":  "trackpaintchnl",
+        "chaincode":  "track-painting-shipment",
+        "method":  "queryHistory",
+        "chaincodeVer":  "v2",
+        "args": []
+        }
+   }
+ };
+
+ }]);
+
+
+	</script>
+	</body>
+</html>

@@ -1,0 +1,224 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.acme.pharma_network
+
+// BASE DEFINTIONS
+enum DrugStatus {
+  o AVAILABLE
+  o WITHDRAWN
+    o ACTIVE
+  o INACTIVE
+}
+
+enum OrderStatus {
+  o WITH_MANUFACTURER
+  o SHIPPED_BY_MANUFACTURER
+  o RECEIVED_BY_DISTRIBUTER
+  o SHIPPED_BY_DISTRIBUTER
+  o RECEIVED_BY_PHARMACY
+  o SELL
+
+}
+
+concept Drug{
+	o String drugName
+    o Integer quantity
+    o DrugStatus drugStatus
+  --> Manufacturer make
+ 	o newBatch[] batch
+    o String[] components
+    o String[] orders
+ 
+}
+concept Batch{
+    o String drugId
+    o Integer quantity
+    o Integer Initialquantity
+    o Integer orderquantity
+    o String problemReported
+    o String pharmaReported
+    o String[] orders
+    o newSupplier[] supplier
+}
+concept orderBatch{
+    o String drugId
+    o Integer quantity
+    o Integer orderquantity
+    
+}
+concept Component {
+  o String manufactureTemperature
+  o String name
+  
+}
+
+abstract asset drugId identified by din{
+   o String din 
+}
+asset newDrug extends drugId {
+  o Drug drug 
+}
+asset newBatch identified by batchCode{
+o String batchCode
+o Batch batch
+}
+asset newOrderBatch identified by batchCode{
+o String batchCode
+o Batch Batch
+}
+asset newSupplier identified by id{
+o String id
+o Component[] components
+}
+
+asset Order identified by orderId {
+  	 o String orderId
+     o newOrderBatch[] batch
+  	 --> newDrug drug
+     o String moisture
+   	 o String shake
+     o String temperature
+     o DrugStatus drugStatus
+     o String fda
+ 	 o Integer quantity
+     o OrderStatus orderStatus
+ 	 --> Pharmacy orderer
+}
+abstract participant Company identified by companyId {
+  o String companyId
+  o String name
+}
+participant Distributor extends Company {
+}
+
+participant Pharmacy extends Company{
+}
+
+participant Manufacturer extends Company { 
+}
+participant FDA extends Company { 
+}
+
+participant Supplier extends Company { 
+}
+transaction register{
+  o String din
+  o Drug drug
+}
+transaction updateNewBatch {
+  o newBatch batch
+}
+transaction reportProblem {
+  o String BatchCode
+  o String drugId
+  o String pharmaReported
+}
+transaction registerSupllier{
+  o String supplierId
+  o Component[] components
+}
+transaction PlaceOrder {
+  o String orderId
+  o Integer quantity
+  o String moisture
+  o String shake
+  o String temperature
+  o DrugStatus drugStatus
+  o String fda
+  o OrderStatus orderStatus
+  o newOrderBatch[] batch
+  --> newDrug drug
+  --> Pharmacy orderer
+}
+transaction UpdateOrderStatus {
+  
+-->Order order
+  o OrderStatus orderStatus
+  o String moisture
+  o String shake
+  o String temperature
+  
+}
+transaction UpdateDrugStatus {
+  o String din
+  o DrugStatus drugStatus
+}
+transaction displayDrugs
+{
+}
+transaction temepratureUpdate {
+  	o String orderId
+	o String temperature
+    --> Pharmacy orderer
+}
+transaction temperatureEvent{
+  o String orderId 
+}
+transaction search{
+  o String din
+}
+transaction searchOrder{
+  o String orderId
+}
+event PlaceOrderEvent {
+  o String orderId
+  o Double quantity
+  o String temperature
+  o String orderStatus
+  --> newDrug drug
+  --> Pharmacy orderer
+}
+event searchOrderEvent {
+  o String orderId
+  o Double quantity
+  o String temperature
+  o String moisture
+  o String shake
+  o String fda
+  o String orderStatus
+  o DrugStatus drugStatus
+}  
+event UpdateOrderStatusEvent {
+  o Order order
+}
+event UpdateDrugStatusEvent {
+  o DrugStatus drugStatus
+  o Drug drug
+}
+event displayDrugsEvent
+{
+  o String din
+  o DrugStatus drugStatus
+}
+event create {
+  	o String din
+	o Drug drug
+}
+event temepratureHistory {
+  	o String orderId
+    o String temperature
+    o String orderStatus
+    o String timestamp_update
+}
+event reportProb{
+ o String batchCode
+o Batch batch
+}
+
+ 
+
+
+
+

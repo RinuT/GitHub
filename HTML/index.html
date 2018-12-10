@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>IndexApp</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">	
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	</head>
+
+	<body>
+	
+	<div class="container-fluid">
+	
+		<!-- Header Section starts here-->
+		<header class="header_bg">
+			<div class="header_left"></div>
+			<div class="header_right"></div>
+			
+			<div class="container">
+				<div class="logo_pharma">
+					<a href="#"><img src="images/logo.png" alt="logo"/></a>
+				</div>
+				
+				<div class="banner_text_right">
+					Blockchain for Business<br><b>WITH IBM BLOCKCHAIN</b>
+				</div>
+			</div>
+
+		</header> 
+		<!-- Header Section ends here-->
+
+		<div class="wrapper">
+			<div ng-app="myApp" ng-controller="myCtrl">
+			<!-- Content Section starts here-->
+			<section class="content_landing">
+				<div class="container">
+				
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_01.png" alt="icon"/></div>
+						  <h3>Track & Trace</h3>
+						  <p>Tracks down product status through out the network from manufacturer-distributor-wholesaler-hospital</p>
+							<a href="#"ng-click="myFunction_t()">Explore</a>
+						</div>
+					</div>
+					
+					
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_04.png" alt="icon"/></div>
+						  <h3>Pharma Network</h3>
+						  <p>Provides accurate visibility into inventory levels and shipping of drug across supply chain.</p>
+							<a href="#"ng-click="myFunction_p()">Explore</a>
+						</div>
+					</div>
+					
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_03.png" alt="icon"/></div>
+						  <h3>Insurance</h3>
+						  <p>Blockchain application enables the consumer to purchase a home warranty and claim insurance. Blockchain network helps to track the status of the claim at various stages</p>
+							<a href="#"ng-click="myFunction_i()">Explore</a>
+						</div>
+					</div>
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_02.png" alt="icon"/></div>
+						  <h3>Decentralised Energy</h3>
+						  <p>Wondering where blockchain might apply in your own life? Interested in energy, sustainability, or climate change? </p>
+							<a href="#"ng-click="myFunction_d()">Explore</a>
+						</div>
+					</div>
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_05.png" alt="icon"/></div>
+						  <h3>Student Identity</h3>
+						  <p>The creation of digital identity-  a unique identifier for you that verifies that you are who you say you are-  seems to be the natural next step to facilitate society’s desire to digitize</p>
+							<a href="#"ng-click="myFunction_s()">Explore</a>
+						</div>
+					</div>
+					<div class="main_three_colum col-md-4">
+						<div class="portal_blocks portal_block01">
+							<div class="icon_block"><img src="images/icon_05.png" alt="icon"/></div>
+						  <h3>Procure to Pay</h3>
+						  <p></p>
+							<a href="#"ng-click="myFunction_pp()">Explore</a>
+						</div>
+					</div>
+					</div>
+			
+			</section>
+			<!-- Content Section ends here-->
+		</div>
+		</div>
+
+		<!-- Footer Section starts here-->
+		<footer class="footer">©  copyright 2018</footer>
+		<!-- Footer Section ends here-->
+		
+	</div>
+	<script>
+var app = angular.module('myApp', []);
+ 
+ app.controller('myCtrl',['$scope','$http','$timeout',function ($scope,$http,$timeout) {
+	 $scope.g=""
+		$scope.myFunction_t=function () {
+		  window.open("../Track_Trace_HTML/HTML/index.html");
+	  }
+	  
+		$scope.myFunction_p=function () {
+		  window.open("../pharma_new_1_latest/index.html");
+	  }
+	  
+		$scope.myFunction_d=function () {
+		  window.open("../decentralised-energy_new/index.html");
+	  }
+	  $scope.myFunction_i=function () {
+		  window.open("../bcins%20modified/Pharma%20modified/index_new.html");
+	  }
+	 $scope.myFunction_s=function () {
+		  window.open("../Student_Digital_ID_HTML/HTML/index.html");
+	  }
+		$scope.myFunction_pp=function () {
+		  window.open("../schneider/index.html");
+	  }
+	}]);
+		  </script>
+	</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Track and Trace</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">    
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    </head>
+
+    <body>
+    
+    <div class="container-fluid">
+    
+        <!-- Header Section starts here-->
+        <header class="header_bg">
+            <div class="header_left"></div>
+            <div class="header_right"></div>
+            
+            <div class="container">
+                <div class="logo_pharma">
+                    <a href="#"><img src="images/logo.png" alt="logo"/></a>
+                </div>
+                
+                <div class="banner_text_right">
+                    Blockchain for Business<br><b>WITH IBM BLOCKCHAIN</b>
+                </div>
+            </div>
+
+        </header> 
+        <!-- Header Section ends here-->
+        
+        <div class="wrapper">
+
+        <!-- Banner Section starts here-->
+        <div class="banner_track">
+            <div class="container">TRACK & TRACE</div>
+        </div>
+        <!-- Banner Section ends here-->
+        <div ng-app="myApp" ng-controller="myCtrl">
+        <!-- Content Section starts here-->
+        <div class="content_track">
+            <div class="container zero_padding">
+                <div class="col-md-3 zero_padding">
+                    <div class="left_menu_items">
+                        <ul class="left_menu_track">
+                                <li class="item_track01" ><a href="index.html">Home</a></li>
+                                <li class="item_track02" ><a href="manufacturer.html">Manufacturer</a></li>
+                                <li class="item_track03" ><a href="distributor.html">Distributor</a></li>
+                                <li class="item_track04" ><a href="dealer.html">Dealer</a></li>
+                                <li class="item_track05" ><a href="hospital.html">Hospital</a></li>
+                                <li class="item_track06"><a href="dashboard_page2.html">Dashboard</a></li>
+                                <li class="item_track07 active_track_left_menu"><a href="dashboard_page1.html">IoT</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 zero_padding">
+                    <div class="right_content_track">
+                        <div style="text-align: center" class="alert alert-success" ng-show="success">
+									{{get_response}} 
+								</div>
+                                <div style="text-align: center" class="alert alert-danger" ng-show="failure">
+									{{error}} 
+								</div>
+                                <div style="text-align: center" class="alert alert-danger" ng-show="failure_1">
+									{{error_1}} 
+								</div>
+                        <h4>Dashboard</h4>
+                        <form>
+                        <div class="dashboard_block">
+                            <div class="search_dashboard_block">
+                                
+                                    <label>UUID</label>
+                                    <input type="text" value="592545"ng-model="uuid">
+                                    <label>Temperature</label>
+                                    <input type="text" value="592545" ng-model="tempertature">
+                                    <p class="submit_block submit">
+                                   <input  type="button" value="Update"ng-click="search()"><br/></p>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+              </div>
+            </div>
+        </div>
+        <!-- Content Section ends here-->
+        </div>
+        </div>
+        <!-- Footer Section starts here-->
+        <footer class="footer">©  copyright 2018</footer>
+        <!-- Footer Section ends here-->
+        
+    </div>
+    <script>
+
+            var app =
+            angular.module('myApp', []);
+            
+            
+            app.controller('myCtrl',['$scope', '$http','$timeout', function ($scope, $http,$timeout) {
+            
+            $scope.uuid=" "
+            $scope.failure=false
+            $scope.success=false
+            $scope.error=""
+            $scope.shipmentStatus=" "
+            $scope.show=false
+            $scope.tempertature=" ";
+            $scope.names = ["High","Normal"];
+
+            $scope.val=1
+            
+            $scope.url_shipment="https://track-and-trace-network.mybluemix.net/api/updateShipmentStatus";
+            
+            $scope.url_product="https://track-and-trace-network.mybluemix.net/api/updateProductStatus"
+            
+            $scope.class_shipment="com.cts.ipm.track.UpdateShipmentStatus"
+            
+            $scope.class_product="com.cts.ipm.track.UpdateProductStatus"
+            
+            
+            $scope.ProductStatus=function(value){
+            
+            if(value>25){
+            
+            api_call_product("TAMPERED",$scope.url_product,$scope.class_product)
+            
+            }
+            
+            else{
+            
+            api_call_product("IN_GOOD_CONDITION",$scope.url_product,$scope.class_product)
+            
+            }
+            
+            }
+            
+            function init (){
+           
+            console.log("my method");
+            var websocket =new WebSocket("ws://track-and-trace-network.mybluemix.net");
+             
+            websocket.addEventListener('open',evt =>doSocketOpen(evt));
+             
+            websocket.addEventListener('close',evt =>doSocketClose(evt));
+             
+            websocket.addEventListener('message',evt =>doSocketMessage(evt));
+            
+            }
+            function doSocketClose(evt) {
+             
+             console.log('Close.');
+              
+             }
+              
+             // Transaction has taken place
+              
+             // Update table and chart
+              
+             function doSocketMessage(evt) {
+              
+             let data =JSON.parse(evt.data);
+              
+             $scope.show=true;
+              
+             $scope.shipmentStatus=data.product.shipmentStatus
+             $scope.ProductStatus($scope.tempertature)
+             }
+              
+             // FYI
+              
+             function doSocketOpen(evt) {
+              
+             console.log('Open.');
+              
+             }
+              
+             $scope.search=function(){
+              
+             init();
+              
+              
+             var search_payload={"$class":"com.cts.ipm.track.searchProduct","uuid":$scope.uuid};
+              
+             var requestInfo =Request_search();
+              
+              
+              
+             $http.post("https://track-and-trace-network.mybluemix.net/api/searchProduct",search_payload).then((function(data,status,headers,config) {
+              
+            $scope.success_1=true
+              
+             }),(function(data,status,headers,config) {
+              
+                var error_m=data.data.error.message
+                $scope.failure_1=true
+             $scope.error_1=error_m.substring(error_m.lastIndexOf(':') + 1);
+              
+             }));
+              
+             }
+
+             function   api_call_product(status,url,class_value){
+            
+            var search_payload={"$class":class_value,"uuid":$scope.uuid,"status":status};
+        
+            $http.post(url,search_payload).then((function(data,status,headers,config)
+             {
+            
+            $scope.success=true
+            $scope.updated_response=data;
+            $scope.get_response=  "Successfully updated data with transaction Id: "+$scope.updated_response.data.transactionId;
+            
+            }),(function(data,status, headers,config) {
+                var error_m=data.data.error.message
+                $scope.failure=true
+             $scope.error=error_m.substring(error_m.lastIndexOf(':') + 1);
+            
+            }));
+            
+            }
+            
+            function Request_search() {
+             
+             return {
+              
+             "Request" : {
+              
+             "$class":"com.cts.ipm.track.CreateProduct",
+              
+             "uuid":""
+              
+             }
+              
+             }
+              
+             };
+            }]); 
+            
+            
+            </script>
+    </body>
+
+</html>

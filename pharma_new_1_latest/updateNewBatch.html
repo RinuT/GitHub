@@ -243,7 +243,7 @@ function doSocketMessage(evt) {
 let data =JSON.parse(evt.data);
 $scope.drugIdSearch=true;
 $scope.names = [];
-if(data.drug==undefined){
+if(data.drug!=undefined){
 for(var i=0;i<data.drug.components.length;i++){
 $scope.names.push(data.drug.components[i])
 }

@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>My Travel App</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src="https://rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.js"></script>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">	
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    </head>
-    
+	</head>
 
 	<body>
-	
+			<div ng-app="myApp" ng-controller="myCtrl">
 	<div class="container-fluid">
 	
 		<!-- Header Section starts here-->
@@ -30,31 +32,108 @@
 
 		</header> 
 		<!-- Header Section ends here-->
+
+		<div class="wrapper">
 		
-		
-		<!-- Content Section ends here-->
-		<div class="student_id_banner">
-		  	<h1>My Travel </h1>
-		  	<h2>
-		  		<b>This site is inspire the inner traveller. Come Travel and experience the joy.</b>
-		  	</h2>
-			<div class="button_set">
-               <!--  <a href="#" class="agent_btn cms_student_btn">Booking Agent</a> -->
-                <a href="BookingAgent/TravelHomePage.html" class="admin_btn cms_student_btn">Booking Agent</a>
-                <a href="FlightInfoServiceProvider/FlightInfoServiceMainPage.html" class="admin_btn cms_student_btn">Flight Info Service Provider</a>
-                <a href="PaymentServiceProvider/PaymentCustomer.html" class="admin_btn cms_student_btn">Payment Service Provider</a>
-                
-                
+			<!-- Menu Section starts here-->
+			<section class="menu_items_ph" >
+				<div class="container">
+					<ul>
+						<li ng-click="show_m()"><a class="item item08" href="#">Booking Agent</a></li>
+						<li ng-click="show_p()"><a class="item item06" href="#">flight Info service Provider</a></li>
+						<li ng-click="show_d()"><a class="item item07" href="#">Payment Service Provider</a></li>
+					</ul>
+				</div>
+			</section>
+			<!-- Menu Section ends here-->
+
+
+			<!-- Content Section starts here-->
+			<section class="content_area">
+				<div class="container"style="height: 700px">
+				
+					<div ng-show="show_ma" class="left_submenu col-md-3">
+						<h1>Booking Agent</h1>
+						<ul>
+							<li><a href="BookingAgent/TravelHomePage.html"target="iframe_b">Travel Home Page</a></li>
+							<li><a href="BookingAgent/RegisterCustomer.html" target="iframe_b">Register Customer</a></li>
+							<li><a href="BookingAgent/CreateInsurance.html" target="iframe_b">Create Insurance</a></li>						
+							
+						</ul>
+					</div>	<div  ng-show="show_ph" class="left_submenu col-md-3">
+						<h1>Flight Info Service Provider</h1>
+						<ul>
+								<li><a href="FlightInfoServiceProvider/FlightInfoServiceMainPage.html"target="iframe_p">Flight Info</a></li>
+						</ul>
+					</div>
+					<div  ng-show="show_di" class="left_submenu col-md-3">
+							<h1>Payment Service Provider</h1>
+							<ul>
+									<li><a href="PaymentServiceProvider/PaymentCustomer.html" target="iframe_d">Payment Customer</a></li>
+									<li><a href="PaymentServiceProvider/PaymentServiceProvider.html"target="iframe_d">Payment Serivce Provider</a></li>
+								</ul>
+									
+									 
+						</div>
+					
+					
+					<div class="right_content_block col-md-9"ng-show="show_ma">
+						
+							<iframe height="650px" width="100%" style="border: none;" src="BookingAgent/TravelHomePage.html" name="iframe_b"></iframe>
+					
+					</div>
+					<div class="right_content_block col-md-9"ng-show="show_di">
+						
+							<iframe height="650px" width="100%" style="border: none" src="PaymentServiceProvider/PaymentServiceProvider.html" name="iframe_d"></iframe>
+					
+					</div>
+					<div class="right_content_block col-md-9"ng-show="show_ph">
+						
+							<iframe  height="650px" width="100%" style="border: none" src="FlightInfoServiceProvider/FlightInfoServiceMainPage.html" name="iframe_p"></iframe>
+					
+					</div>
+				
+				</div>
+			</section>
+			<!-- Content Section ends here-->
 			</div>
 		</div>
-		<!-- Content Section ends here-->
-
 
 		<!-- Footer Section starts here-->
 		<footer class="footer">©  copyright 2018</footer>
 		<!-- Footer Section ends here-->
 		
 	</div>
-	</body>
+	<script>
+var app = angular.module('myApp', []);
+ 
+ app.controller('myCtrl',['$scope','$http','$timeout',function ($scope,$http,$timeout) {
+	$scope.show_ma=true;
+	$scope.show_di=false;
+	$scope.show_ph=false;
+$scope.show_m=function(){
+	var ifr = document.getElementsByName('iframe_b')[0];
+    ifr.src = ifr.src;
+	$scope.show_ma=true;
+	$scope.show_di=false;
+	$scope.show_ph=false;
+}
+$scope.show_d=function(){
+	var ifr = document.getElementsByName('iframe_d')[0];
+    ifr.src = ifr.src;
+	$scope.show_ma=false;
+	$scope.show_di=true;
+	$scope.show_ph=false;
+}
+$scope.show_p=function(){
+	var ifr = document.getElementsByName('iframe_p')[0];
+    ifr.src = ifr.src;
+	$scope.show_ma=false;
+	$scope.show_di=false;
+	$scope.show_ph=true;
+}
 
+ }]);
+	</script>
+	</body>
 </html>
